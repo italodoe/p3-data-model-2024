@@ -18,8 +18,8 @@ model User {
   fullName String?
   admin    Boolean  @default(false)
 
-  Video   Video[]
-  Comment Comment[]
+  videos   Video[]
+  comments Comment[]
 }
 
 model Video {
@@ -48,7 +48,7 @@ model Comment {
   author   User @relation(fields: [authorId], references: [userId])
   authorId Int
 
-  Children Comment[] @relation("CommentChildren")
+  children Comment[] @relation("CommentChildren")
   parent   Comment?  @relation("CommentChildren", fields: [parentId], references: [commentId])
   parentId Int?
 }
