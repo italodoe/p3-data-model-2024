@@ -26,7 +26,7 @@ model Video {
   videoId     Int      @id @default(autoincrement())
   createdAt   DateTime @default(now())
   title       String
-  url         String // youtube url code 
+  url         String   @unique // youtube url code 
   description String?
   views       Int      @default(0)
   // duration    String
