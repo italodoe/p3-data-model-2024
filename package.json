@@ -8,5 +8,11 @@
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "prisma": {
+    "seed": "bun prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "5.13.0"
   }
 }
