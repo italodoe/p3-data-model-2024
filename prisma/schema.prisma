@@ -9,3 +9,46 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  userId   Int      @id @default(autoincrement())
+  createAt DateTime @default(now())
+  email    String   @unique
+  nick     String   @unique
+  fullName String?
+  admin    Boolean  @default(false)
+
+  Video   Video[]
+  Comment Comment[]
+}
+
+model Video {
+  videoId     Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  title       String
+  url         String // youtube url code 
+  description String?
+  views       Int      @default(0)
+  // duration    String
+
+  author   User @relation(fields: [authorId], references: [userId])
+  authorId Int
+
+  comments Comment[]
+}
+
+model Comment {
+  commentId Int      @id @default(autoincrement())
+  text      String
+  createdAt DateTime @default(now())
+
+  video   Video @relation(fields: [videoId], references: [videoId])
+  videoId Int
+
+  author   User @relation(fields: [authorId], references: [userId])
+  authorId Int
+
+  Children Comment[] @relation("CommentChildren")
+  parent   Comment?  @relation("CommentChildren", fields: [parentId], references: [commentId])
+  parentId Int?
+}
