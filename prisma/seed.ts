@@ -1,86 +1,11 @@
 import { Prisma, PrismaClient, type User } from "@prisma/client";
-
-var firstNames: string[] = [
-  "John",
-  "Emma",
-  "Michael",
-  "Sarah",
-  "David",
-  "Olivia",
-  "James",
-  "Emily",
-  "William",
-  "Sophia",
-  "Ava",
-  "Noah",
-  "Isabella",
-  "Liam",
-  "Charlotte",
-  "Ethan",
-  "Amelia",
-  "Mason",
-  "Mia",
-  "Benjamin",
-  "Mateo",
-  "Alejandra",
-  "Louis",
-  "Camille",
-  "Giovanni",
-  "Isabella",
-  "Lukas",
-  "Sophie",
-  "Dmitri",
-  "Natalia",
-  "Hiroshi",
-  "Sakura",
-  "Wei",
-  "Li",
-  "Thiago",
-  "Gabriela",
-  "Lachlan",
-  "Matilda",
-];
-
-var lastNames: string[] = [
-  "Smith",
-  "Johnson",
-  "Williams",
-  "Jones",
-  "Brown",
-  "Davis",
-  "Miller",
-  "Wilson",
-  "Moore",
-  "Taylor",
-  "Anderson",
-  "Thomas",
-  "Jackson",
-  "White",
-  "Harris",
-  "Martin",
-  "Thompson",
-  "Garcia",
-  "Martinez",
-  "Robinson",
-  "Hernandez",
-  "Garcia",
-  "Dubois",
-  "Leroy",
-  "Rossi",
-  "Conti",
-  "Muller",
-  "Schmidt",
-  "Ivanov",
-  "Petrova",
-  "Sato",
-  "Tanaka",
-  "Wang",
-  "Zhang",
-  "Silva",
-  "Santos",
-  "Smith",
-  "Wilson",
-];
+import {
+  firstNames,
+  lastNames,
+  usageText,
+  videoComments,
+  videoInfos,
+} from "./data-seed";
 
 const getRandomBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -88,15 +13,13 @@ const getRandomBetween = (min: number, max: number) => {
 
 var n: number = firstNames.length;
 var users: User[] = [];
-const usageText = `Usage: bun seed.ts <number-of-users>
 
-Error: Please provide the correct number of users to generate the seed data.
-
-<number-of-users> must be a positive integer between 1 and ${
-  firstNames.length
-}, inclusive.
-
-Example: bun seed.ts ${getRandomBetween(1, firstNames.length)}`;
+console.log(`
+firstNames ${firstNames.length}
+lastNames ${lastNames.length}
+videoInfos ${videoInfos.length}
+videoComments ${videoComments.length}
+`);
 
 if (process.argv.length > 3) {
   console.error(usageText);
@@ -136,7 +59,7 @@ db.$on("error", (e) => {
 // interface user
 
 const getRandomUserInfo = () => {
-  const index = getRandomBetween(0, firstNames.length-1);
+  const index = getRandomBetween(0, firstNames.length - 1);
   const firsName = firstNames[index];
   const lastName = lastNames[index];
   firstNames.splice(index, 1);
@@ -149,17 +72,23 @@ const getRandomUserInfo = () => {
     admin: false,
   };
 };
+const getRandomVideoInfo = () => {
+  const index = getRandomBetween(0, videoInfos.length - 1);
+  const videoInfo = videoInfos[index];
+  videoInfos.splice(index, 1);
+  return {
+    url: videoInfo.url,
+    title: videoInfo.title,
+    description: videoInfo.description,
+  };
+};
 
-async function createUser(data: Prisma.UserCreateInput): Promise<User> {
-  return await db.user.create({
-    data,
-    select: {
-      userId: true,
-      email: true,
-      nick: true,
-    },
-  });
-}
+const getRandomCommentInfo = () => {
+  const index = getRandomBetween(0, videoComments.length - 1);
+  const comment = videoComments[index];
+  videoComments.splice(index, 1);
+  return comment;
+};
 
 for (let i = 0; i < n; ++i) {
   const info = getRandomUserInfo();
@@ -170,15 +99,33 @@ for (let i = 0; i < n; ++i) {
       nick: info.nick,
       fullName: info.fullName,
       admin: info.admin,
+      videos: {
+        createMany: {
+          data: [
+            getRandomVideoInfo(),
+            getRandomVideoInfo(),
+          ],
+        },
+      },
+    },
+
+    include: {
+      videos: true,
+      comments: true,
     },
   });
-  console.log(
-    `user created: 
-    >> id: ${user.userId} 
-    >> email: ${user.email} 
-    >> nick: ${user.nick} 
-    >> fullName: ${user.fullName}`
-  );
+
+  for (let i = 0; i < 2; ++i) {
+    const comment = await db.comment.create({
+      data: {
+        text: getRandomCommentInfo(),
+        videoId: user.videos[i].videoId,
+        authorId: user.userId,
+      },
+    });
+    user.comments.push(comment);
+  }
+
   users.push(user);
 }
 
