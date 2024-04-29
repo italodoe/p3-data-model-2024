@@ -62,3 +62,93 @@ export const findUserByEmail = async (
     where: { email },
   });
 };
+
+/*
+  Delete
+*/
+
+export const deleteUserById = async (
+  userId: number
+): Promise<UserOutput | null> => {
+  return await db.user.delete({
+    where: { userId },
+  });
+};
+
+export const deleteUserByEmail = async (
+  email: string
+): Promise<UserOutput | null> => {
+  return await db.user.delete({
+    where: { email },
+  });
+};
+
+export const deleteUserByNick = async (
+  nick: string
+): Promise<UserOutput | null> => {
+  return await db.user.delete({
+    where: { nick },
+  });
+};
+
+/*
+  Update
+*/
+
+export const updateUserById = async (
+  userId: number,
+  email: string,
+  nick: string,
+  fullName: string,
+  admin: boolean = false,
+  videos = null,
+  comments = null
+): Promise<UserOutput | null> => {
+  return await db.user.update({
+    where: { userId },
+    data: {
+      email,
+      nick,
+      fullName,
+      admin,
+    },
+  });
+};
+
+export const updateUserByEmail = async (
+  email: string,
+  nick: string,
+  fullName: string,
+  admin: boolean = false,
+  videos = null,
+  comments = null
+): Promise<UserOutput | null> => {
+  return await db.user.update({
+    where: { email },
+    data: {
+      email,
+      nick,
+      fullName,
+      admin,
+    },
+  });
+};
+
+export const updateUserByNick = async (
+  email: string,
+  nick: string,
+  fullName: string,
+  admin: boolean = false,
+  videos = null,
+  comments = null
+): Promise<UserOutput | null> => {
+  return await db.user.update({
+    where: { nick },
+    data: {
+      email,
+      nick,
+      fullName,
+      admin,
+    },
+  });
+};
