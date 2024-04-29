@@ -4,6 +4,10 @@ import { db } from "./db";
 export type UserOutput = Prisma.UserCreateInput;
 export type UserOutputWithoutEmail = Omit<UserOutput, "emails">;
 
+/*
+  Create
+*/
+
 export const newUser = async (
   email: string,
   nick: string,
@@ -22,11 +26,41 @@ export const newUser = async (
   });
 };
 
+
+
+/*
+  Find
+*/
+
 export const findAllUsers = async (): Promise<UserOutput[]> => {
   return await db.user.findMany({
     include: {
-        videos: true,
-        comments: true
-    }
+      videos: true,
+      comments: true,
+    },
+  });
+};
+
+export const findUserById = async (
+  userId: number
+): Promise<UserOutput | null> => {
+  return await db.user.findFirst({
+    where: { userId },
+  });
+};
+
+export const findUserByNick = async (
+  nick: string
+): Promise<UserOutput | null> => {
+  return await db.user.findFirst({
+    where: { nick },
+  });
+};
+
+export const findUserByEmail = async (
+  email: string
+): Promise<UserOutput | null> => {
+  return await db.user.findFirst({
+    where: { email },
   });
 };
