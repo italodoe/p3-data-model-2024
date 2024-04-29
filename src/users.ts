@@ -12,7 +12,7 @@ export const newUser = async (
   email: string,
   nick: string,
   fullName: string,
-  admin: boolean,
+  admin: boolean = false,
   videos = null,
   comments = null
 ) => {
@@ -26,13 +26,11 @@ export const newUser = async (
   });
 };
 
-
-
 /*
   Find
 */
 
-export const findAllUsers = async (): Promise<UserOutput[]> => {
+export const findAllUsers = async () => {
   return await db.user.findMany({
     include: {
       videos: true,
