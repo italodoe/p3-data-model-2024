@@ -115,7 +115,7 @@ for (let i = 0; i < n; ++i) {
     },
   });
 
-  for (let i = 0; i < 2; ++i) {
+  for (let i = 0; i < user.videos.length; ++i) {
     const comment = await db.comment.create({
       data: {
         text: getRandomCommentInfo(),
