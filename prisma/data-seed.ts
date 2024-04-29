@@ -375,8 +375,8 @@ export var videoInfos = [
     description: "Muse's alternative rock anthem",
   },
   {
-    url: "-JJAXwAaA2w",
-    title: "The Bitter End",
+    url: "E-OY8K3cEmI",
+    title: "Rinzler",
     description: "Placebo's alt-rock anthem",
   },
   {
