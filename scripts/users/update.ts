@@ -8,7 +8,6 @@ import {
   forceExit,
   isUserInfo,
   normalizeTextCRUD,
-  printUser,
   printUserQuery,
   validateEmail,
 } from "./utils";
