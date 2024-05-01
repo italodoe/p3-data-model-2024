@@ -1,11 +1,16 @@
 import { Prisma } from "@prisma/client";
-import { updateUserById } from "../../src/users";
+import {
+  updateUserByEmail,
+  updateUserById,
+  updateUserByNick,
+} from "../../src/users";
 import {
   forceExit,
   isUserInfo,
   normalizeTextCRUD,
   printUser,
   printUserQuery,
+  validateEmail,
 } from "./utils";
 
 const errorData = `
@@ -41,7 +46,8 @@ const by = process.argv[3];
 const q = process.argv[4];
 
 switch (option) {
-  case "-e":
+  //by userID
+  case "-u":
   case "--user": {
     try {
       const userId = parseInt(by);
@@ -57,16 +63,72 @@ switch (option) {
           data.fullName,
           data.admin
         );
-        printUserQuery(updated, normalizeTextCRUD(String(userId), "UPDATE"));
+        printUserQuery(
+          updated,
+          normalizeTextCRUD(String(userId), "UPDATED-BY-ID")
+        );
       }
     } catch (e) {
-      if (e instanceof Prisma.PrismaClientKnownRequestError) {
-        // The .code property can be accessed in a type-safe manner
-        if (e.code === "P2025") {
-          console.log("Bad userId", e.meta);
-          forceExit(1);
-        }
+      errorHandler(e, "userID");
+      console.error(errorData);
+    }
+    forceExit(1, usageText);
+
+    break;
+  }
+
+  //by email
+  case "-e":
+  case "--email": {
+    try {
+      const email = String(by);
+      if (!validateEmail(email)) {
+        forceExit(1, usageText);
       }
+      let data = JSON.parse(q);
+      if (isUserInfo(data)) {
+        const updated = await updateUserByEmail(
+          email,
+          data.email,
+          data.nick,
+          data.fullName,
+          data.admin
+        );
+        printUserQuery(
+          updated,
+          normalizeTextCRUD(String(email), "UPDATED-BY-EMAIL")
+        );
+      }
+    } catch (e) {
+      errorHandler(e, "email");
+      console.error(errorData);
+    }
+    forceExit(1, usageText);
+
+    break;
+  }
+
+  //by nick
+  case "-n":
+  case "--nick": {
+    try {
+      const nick = String(by);
+      let data = JSON.parse(q);
+      if (isUserInfo(data)) {
+        const updated = await updateUserByNick(
+          nick,
+          data.nick,
+          data.email,
+          data.fullName,
+          data.admin
+        );
+        printUserQuery(
+          updated,
+          normalizeTextCRUD(String(nick), "UPDATED-BY-NICK")
+        );
+      }
+    } catch (e) {
+      errorHandler(e, "nick");
       console.error(errorData);
     }
     forceExit(1, usageText);
@@ -82,5 +144,15 @@ switch (option) {
   default: {
     forceExit(1, usageText);
     break;
+  }
+}
+
+function errorHandler(e: Error, type: string) {
+  if (e instanceof Prisma.PrismaClientKnownRequestError) {
+    // The .code property can be accessed in a type-safe manner
+    if (e.code === "P2025") {
+      console.log(`Bad ${type} >>`, e.meta);
+      forceExit(1);
+    }
   }
 }

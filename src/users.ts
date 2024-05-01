@@ -117,6 +117,7 @@ export const updateUserById = async (
 
 export const updateUserByEmail = async (
   email: string,
+  newEmail: string,
   nick: string,
   fullName: string,
   admin: boolean = false,
@@ -126,7 +127,7 @@ export const updateUserByEmail = async (
   return await db.user.update({
     where: { email },
     data: {
-      email,
+      email: newEmail,
       nick,
       fullName,
       admin,
@@ -135,8 +136,9 @@ export const updateUserByEmail = async (
 };
 
 export const updateUserByNick = async (
-  email: string,
   nick: string,
+  newNick: string,
+  email: string,
   fullName: string,
   admin: boolean = false,
   videos = null,
@@ -146,7 +148,7 @@ export const updateUserByNick = async (
     where: { nick },
     data: {
       email,
-      nick,
+      nick: newNick,
       fullName,
       admin,
     },
