@@ -1,24 +1,8 @@
 import { Prisma } from "@prisma/client";
 import { newUser } from "../../src/users";
-import { forceExit, getRandomBetween, printUser, validateEmail } from "./utils";
+import { forceExit, getRandomBetween, isUserInfo, printUser, validateEmail } from "./utils";
 
-//interfaces
-interface userInfo {
-  email: string;
-  nick: string;
-  fullName: string;
-  admin: boolean;
-}
 
-function isUserInfo(arg: any): arg is userInfo {
-  return (
-    typeof arg.email === "string" &&
-    validateEmail(arg.email) &&
-    typeof arg.nick === "string" &&
-    typeof arg.fullName === "string" &&
-    typeof arg.admin === "boolean"
-  );
-}
 
 // data arrays
 const domains = [
@@ -355,7 +339,7 @@ const nameList = [
 const errorData = `
 Invalid user creation data. Please provide correct details`;
 const usageText = `
-Usage: bun scripts/user/create [options]
+Usage: bun scripts/users/create.ts [options]
 
 Options:
   -r, --random <integer>    Create a user with random data between 1-10
