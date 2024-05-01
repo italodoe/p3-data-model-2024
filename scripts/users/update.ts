@@ -15,7 +15,7 @@ import {
 const errorData = `
 User update failed. Please provide valid details.`;
 const usageText = `
-Usage: bun scripts/user/update.ts [options]
+Usage: bun scripts/users/update.ts [options]
 
 Options:
 
@@ -47,7 +47,10 @@ const q = process.argv[4];
 switch (option) {
   //by userID
   case "-u":
-  case "--user": {
+  case "--userId": 
+  case "--userid": 
+  case "--user": 
+  case "--id": {
     try {
       const userId = parseInt(by);
       if (isNaN(userId)) {

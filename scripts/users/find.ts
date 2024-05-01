@@ -5,7 +5,7 @@ import { forceExit, printUserNotFound, printUserQuery } from "./utils";
 const usageText = `Usage: bun scripts/user/find [options]
 
 Options:
-  -i, --id <userId>             Search for a user by ID
+  -u, --user <userId>           Search for a user by userId
   -e, --email <email>           Search for a user by email
   -n, --nick <nickname>         Search for a user by nickname
   -h, --help                    Display this help message`;
@@ -18,8 +18,12 @@ const option = process.argv[2];
 const q = process.argv[3];
 
 switch (option) {
-  case "-i":
-  case "--id": {
+  case "-u":
+  case "--userId": 
+  case "--userid": 
+  case "--user": 
+  case "--id": 
+  {
     const id = parseInt(q);
     if (isNaN(id)) {
       forceExit(1, usageText);
