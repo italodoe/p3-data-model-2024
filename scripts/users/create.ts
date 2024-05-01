@@ -1,20 +1,8 @@
 import { Prisma } from "@prisma/client";
 import { newUser } from "../../src/users";
+import { forceExit, getRandomBetween, printUser, validateEmail } from "./utils";
 
-function forceExit(code: number, withError: boolean = true) {
-  if (withError) console.error(usageText);
-  process.exit(code);
-}
-
-const getRandomBetween = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
-
-const validateEmail = (email: string) => {
-  var re = /\S+@\S+\.\S+/;
-  return re.test(email);
-};
-
+//interfaces
 interface userInfo {
   email: string;
   nick: string;
@@ -32,6 +20,7 @@ function isUserInfo(arg: any): arg is userInfo {
   );
 }
 
+// data arrays
 const domains = [
   ".com",
   ".net",
@@ -363,7 +352,10 @@ const nameList = [
   "vruh",
 ];
 
-const usageText = `Usage: bun scripts/user/create [options]
+const errorData = `
+Invalid user creation data. Please provide correct details`;
+const usageText = `
+Usage: bun scripts/user/create [options]
 
 Options:
   -r, --random <integer>    Create a user with random data between 1-10
@@ -377,7 +369,7 @@ Options:
   -h, --help                Display this help message`;
 
 if (process.argv.length < 3 || process.argv.length > 4) {
-  forceExit(1);
+  forceExit(1, usageText);
 }
 
 const option = process.argv[2];
@@ -386,14 +378,14 @@ const q = process.argv[3];
 switch (option) {
   case "-h":
   case "--help": {
-    forceExit(0, true);
+    forceExit(0, usageText);
     break;
   }
   case "-r":
   case "--random": {
     const n = parseInt(q);
     if (isNaN(n) || (!isNaN(n) && (n < 1 || n > 10))) {
-      forceExit(1);
+      forceExit(1, usageText);
     }
     for (let i = 0; i < n; i++) {
       const userInfo = generateRandomInfo();
@@ -407,8 +399,8 @@ switch (option) {
 
     break;
   }
-  case "-u":
-  case "--user": {
+  case "-j":
+  case "--json": {
     if (typeof q === "undefined") forceExit(1);
 
     try {
@@ -420,6 +412,7 @@ switch (option) {
           data.fullName,
           data.admin
         );
+
         printUser(user);
       }
     } catch (e) {
@@ -427,15 +420,16 @@ switch (option) {
         // The .code property can be accessed in a type-safe manner
         if (e.code === "P2002") {
           console.log("There is a unique constraint violation", e.meta);
-          forceExit(1, false);
+          forceExit(1);
         }
       }
+      console.error(errorData);
     }
-    forceExit(1);
+    forceExit(1, usageText);
     break;
   }
   default: {
-    forceExit(1);
+    forceExit(1, usageText);
     break;
   }
 }
@@ -466,9 +460,4 @@ function generateRandomInfo() {
   const nick = firstName[0] + lastName;
 
   return { firstName, lastName, email, nick };
-}
-
-function printUser(user: Prisma.UserCreateInput, exit: boolean = true) {
-  console.log(`User >>   `, user, `\n`);
-  if (exit) process.exit(0);
 }

@@ -1,5 +1,6 @@
 import type { Prisma } from "@prisma/client";
 import { findUserByEmail, findUserById, findUserByNick } from "../../src/users";
+import { forceExit, printUserNotFound, printUserQuery } from "./utils";
 
 const usageText = `Usage: bun scripts/user/find [options]
 
@@ -10,7 +11,7 @@ Options:
   -h, --help                    Display this help message`;
 
 if (process.argv.length != 4) {
-  forceExit(1);
+  forceExit(1, usageText);
 }
 
 const option = process.argv[2];
@@ -21,63 +22,60 @@ switch (option) {
   case "--id": {
     const id = parseInt(q);
     if (isNaN(id)) {
-      forceExit(1);
+      forceExit(1, usageText);
     }
 
-    const byId = await findUserById(id);
-    if (byId) {
-      printUser(byId, "id");
+    try {
+      const byId = await findUserById(id);
+      if (byId) {
+        printUserQuery(byId, `id:${q}`);
+      }
+      printUserNotFound();
+    } catch (error) {
+      console.error(error);
     }
-    printNotFound();
+
     break;
   }
 
   case "-e":
   case "--email": {
-    const byEmail = await findUserByEmail(q);
-    if (byEmail) {
-      printUser(byEmail, "email");
+    try {
+      const byEmail = await findUserByEmail(q);
+      if (byEmail) {
+        printUserQuery(byEmail, `email:${q}`);
+      }
+      printUserNotFound();
+    } catch (error) {
+      console.error(error);
     }
-    printNotFound();
+
     break;
   }
 
   case "-n":
   case "--nick":
   case "--nickname": {
-    const byNick = await findUserByNick(q);
-    if (byNick) {
-      printUser(byNick, "email");
+    try {
+      const byNick = await findUserByNick(q);
+      if (byNick) {
+        printUserQuery(byNick, `nick:${q}`);
+      }
+      printUserNotFound();
+    } catch (error) {
+      console.error(error);
     }
-    printNotFound();
+
     break;
   }
   case "-h":
   case "--help": {
-    console.error(usageText);
+    forceExit(0, usageText);
     break;
   }
 
   default: {
-    forceExit(1);
+    forceExit(1, usageText);
     break;
   }
-}
-
-function forceExit(code: number, withError: boolean = true) {
-  if (withError) console.error(usageText);
-  process.exit(code);
-}
-
-function printUser(
-  user: Prisma.UserCreateInput,
-  type: string,
-  exit: boolean = true
-) {
-  console.log(`User >> ${type}:${q}  >>   `, user, `\n`);
-  if (exit) process.exit(0);
-}
-function printNotFound(exit: boolean = true) {
-  console.info(`User not found\n`);
-  if (exit) process.exit(0);
 }
