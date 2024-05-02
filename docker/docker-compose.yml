@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=prismauser
+      - POSTGRES_PASSWORD=prismapass
+      - POSTGRES_DB=p3
+    ports:
+      - "5432:5432"
+    volumes:
+      - data:/var/lib/postgresql/data
+    container_name: P3-postgres
+volumes:
+  data:
