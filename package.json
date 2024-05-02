@@ -2,17 +2,22 @@
   "name": "p3-data-model-2024",
   "module": "index.ts",
   "type": "module",
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest",
-    "prisma": "^5.13.0"
+    "@types/node": "^20.12.7",
+    "prisma": "^5.13.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
-  "prisma": {
-    "seed": "bun prisma/seed.ts"
-  },
   "dependencies": {
-    "@prisma/client": "5.13.0"
+    "@prisma/client": "5.13.0",
+    "docker": "^1.0.0"
   }
 }
