@@ -1,5 +1,6 @@
+import type { Prisma } from "@prisma/client";
 import { db } from "./db";
-
+export type VideoOutput = Prisma.VideoCreateInput;
 /*
   Find
 */
@@ -44,6 +45,62 @@ export const finVideoByAuthorNick = async (nick: string) => {
     where: {
       author: {
         nick: nick,
+      },
+    },
+    include: {
+      author: true,
+      comments: true,
+    },
+  });
+};
+
+// find by video
+
+export const findVideoById = async (videoId: number) => {
+  return await db.video.findFirst({
+    where: { videoId },
+    include: {
+      author: true,
+      comments: true,
+    },
+  });
+};
+
+export const findVideoByUrl = async (url: string) => {
+  return await db.video.findFirst({
+    where: { url },
+    include: {
+      author: true,
+      comments: true,
+    },
+  });
+};
+
+export const findVideoByTitleDeprecated = async (search: string) => {
+  return await db.$queryRaw`SELECT * FROM Video WHERE title LIKE ${`%${
+    search || ""
+  }%`} `;
+};
+
+export const findVideoByTitle = async (title: string) => {
+  return await db.video.findMany({
+    where: {
+      title: {
+        contains: title,
+      },
+    },
+    include: {
+      author: true,
+      comments: true,
+    },
+  });
+};
+
+export const findVideoByDescription = async (description: string) => {
+  return await db.video.findMany({
+    where: {
+      description: {
+        contains: description,
       },
     },
     include: {

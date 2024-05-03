@@ -1,5 +1,3 @@
-import type { Prisma } from "@prisma/client";
-import { findUserByEmail, findUserById, findUserByNick } from "../../src/users";
 import {
   forceExit,
   normalizeTextCRUD,
@@ -11,6 +9,11 @@ import {
   finVideoByAuthorEmail,
   finVideoByAuthorId,
   finVideoByAuthorNick,
+  findVideoByDescription,
+  findVideoById,
+  findVideoByTitle,
+  findVideoByUrl,
+  type VideoOutput,
 } from "../../src/videos";
 
 const usageText = `Usage: bun scripts/videos/find [options]
@@ -19,6 +22,10 @@ Options:
   -a, --author <authorId>       Search for a video by authorId
   -e, --email <email>           Search for a video by author email
   -n, --nick <nickname>         Search for a video by author nickname
+  -v, --videoId <videoId>       Search for a video by videoId
+  -u, --url <url>               Search for a video by url
+  -t, --title <term>            Search for a video by title
+  -d, --description <term>      Search for a video by description
   -h, --help                    Display this help message`;
 
 if (process.argv.length != 4) {
@@ -33,13 +40,7 @@ switch (option) {
   case "--author":
   case "--authorId":
   case "--authorid":
-  case "--a":
-  case "--userId":
-  case "--userid":
-  case "--user":
-  case "--id":
-  case "--u":
-  case "--user": {
+  case "--a": {
     const id = parseInt(by);
     if (isNaN(id)) {
       forceExit(1, usageText);
@@ -107,6 +108,98 @@ switch (option) {
 
     break;
   }
+
+  case "-u":
+  case "--url":
+  case "--URL": {
+    try {
+      const url = String(by);
+      const byUrl = await findVideoByUrl(url);
+      if (byUrl) {
+        printVideoQuery(
+          byUrl,
+          normalizeTextCRUD(url, "FIND-BY-VIDEO-URL"),
+          true
+        );
+      }
+      printVideoNotFound();
+    } catch (error) {
+      console.error(error);
+    }
+
+    break;
+  }
+
+  case "-v":
+  case "--video":
+  case "--videoId":
+  case "--videoid":
+  case "--id":
+  case "-i": {
+    const id = parseInt(by);
+    if (isNaN(id)) {
+      forceExit(1, usageText);
+    }
+    try {
+      const byId = await findVideoById(id);
+      if (byId) {
+        printVideoQuery(
+          byId,
+          normalizeTextCRUD(String(id), "FIND-BY-VIDEO-ID"),
+          true
+        );
+      }
+      printVideoNotFound();
+    } catch (error) {
+      console.error(error);
+    }
+
+    break;
+  }
+
+  case "-t":
+  case "-s":
+  case "--title":
+  case "--search": {
+    try {
+      const title = String(by);
+      const arrayByTitle = await findVideoByTitle(title);
+      if (arrayByTitle && arrayByTitle.length) {
+        printVideoArray(
+          arrayByTitle,
+          normalizeTextCRUD(title, "FIND-BY-TITLE")
+        );
+        forceExit(0);
+      }
+      printVideoNotFound();
+    } catch (error) {
+      console.error(error);
+    }
+
+    break;
+  }
+
+  case "-d":
+  case "--desc":
+  case "--description": {
+    try {
+      const desc = String(by);
+      const arrayByDesc = await findVideoByDescription(desc);
+      if (arrayByDesc && arrayByDesc.length) {
+        printVideoArray(
+          arrayByDesc,
+          normalizeTextCRUD(desc, "FIND-BY-DESCRIPTION")
+        );
+        forceExit(0);
+      }
+      printVideoNotFound();
+    } catch (error) {
+      console.error(error);
+    }
+
+    break;
+  }
+
   case "-h":
   case "--help": {
     forceExit(0, usageText);
@@ -119,8 +212,8 @@ switch (option) {
   }
 }
 
-function printVideoArray(videos: Prisma.VideoCreateInput[], text: string) {
-  videos.forEach((value: Prisma.VideoCreateInput, key) => {
+function printVideoArray(videos: VideoOutput[], text: string) {
+  videos.forEach((value: VideoOutput, key) => {
     printVideoQuery(value, text, false);
   });
 }
