@@ -54,10 +54,12 @@ switch (option) {
         forceExit(1, usageText);
       }
       const deleted = await deleteUserById(userId);
-      printUserQuery(
-        deleted,
-        normalizeTextCRUD(String(userId), "DELETED-BY-ID")
-      );
+      if (deleted)
+        printUserQuery(
+          deleted,
+          normalizeTextCRUD(String(userId), "DELETED-BY-ID"),
+          true
+        );
     } catch (e) {
       errorHandler(e, "userID");
       console.error(errorData);
@@ -76,10 +78,11 @@ switch (option) {
         forceExit(1, usageText);
       }
       const deleted = await deleteUserByEmail(email);
-      printUserQuery(
-        deleted,
-        normalizeTextCRUD(String(email), "DELETED-BY-EMAIL")
-      );
+      if (deleted)
+        printUserQuery(
+          deleted,
+          normalizeTextCRUD(String(email), "DELETED-BY-EMAIL")
+        );
     } catch (e) {
       errorHandler(e, "email");
       console.error(errorData);
@@ -95,10 +98,11 @@ switch (option) {
     try {
       const nick = String(by);
       const deleted = await deleteUserByNick(nick);
-      printUserQuery(
-        deleted,
-        normalizeTextCRUD(String(nick), "DELETED-BY-NICK")
-      );
+      if (deleted)
+        printUserQuery(
+          deleted,
+          normalizeTextCRUD(String(nick), "DELETED-BY-NICK")
+        );
     } catch (e) {
       errorHandler(e, "nick");
       console.error(errorData);

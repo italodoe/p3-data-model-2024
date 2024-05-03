@@ -1,8 +1,14 @@
 import type { Prisma } from "@prisma/client";
 import { findUserByEmail, findUserById, findUserByNick } from "../../src/users";
-import { forceExit, printUserNotFound, printUserQuery } from "../utils/utils";
+import {
+  forceExit,
+  normalizeTextCRUD,
+  printUserNotFound,
+  printUserQuery,
+  validateEmail,
+} from "../utils/utils";
 
-const usageText = `Usage: bun scripts/user/find [options]
+const usageText = `Usage: bun scripts/users/find [options]
 
 Options:
   -u, --user <userId>           Search for a user by userId
@@ -15,26 +21,24 @@ if (process.argv.length != 4) {
 }
 
 const option = process.argv[2];
-const q = process.argv[3];
+const by = process.argv[3];
 
 switch (option) {
   case "-u":
-  case "--userId": 
-  case "--userid": 
-  case "--user": 
-  case "--id": 
-  {
-    const id = parseInt(q);
+  case "--userId":
+  case "--userid":
+  case "--user":
+  case "--id": {
+    const id = parseInt(by);
     if (isNaN(id)) {
       forceExit(1, usageText);
     }
-
     try {
       const byId = await findUserById(id);
       if (byId) {
-        printUserQuery(byId, `id:${q}`);
+        printUserQuery(byId, normalizeTextCRUD(String(id), "FIND-BY-ID"), true);
       }
-      printUserNotFound();
+      printUserNotFound(true);
     } catch (error) {
       console.error(error);
     }
@@ -45,11 +49,19 @@ switch (option) {
   case "-e":
   case "--email": {
     try {
-      const byEmail = await findUserByEmail(q);
-      if (byEmail) {
-        printUserQuery(byEmail, `email:${q}`);
+      const email = String(by);
+      if (!validateEmail(email)) {
+        forceExit(1, usageText);
       }
-      printUserNotFound();
+      const byEmail = await findUserByEmail(by);
+      if (byEmail) {
+        printUserQuery(
+          byEmail,
+          normalizeTextCRUD(email, "FIND-BY-EMAIL"),
+          true
+        );
+      }
+      printUserNotFound(true);
     } catch (error) {
       console.error(error);
     }
@@ -61,11 +73,12 @@ switch (option) {
   case "--nick":
   case "--nickname": {
     try {
-      const byNick = await findUserByNick(q);
+      const nick = String(by);
+      const byNick = await findUserByNick(nick);
       if (byNick) {
-        printUserQuery(byNick, `nick:${q}`);
+        printUserQuery(byNick, normalizeTextCRUD(nick, "FIND-BY-NICK"), true);
       }
-      printUserNotFound();
+      printUserNotFound(true);
     } catch (error) {
       console.error(error);
     }

@@ -1,7 +1,7 @@
 import { findAllVideos } from "../../src/videos";
 import { forceExit } from "../utils/utils";
 
-const usageText = `Usage: bun scripts/user/all [options]
+const usageText = `Usage: bun scripts/videos/all [options]
 
 Description:
   This script retrieves all videos along with their authors and comments.

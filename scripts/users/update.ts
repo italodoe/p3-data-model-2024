@@ -47,9 +47,9 @@ const q = process.argv[4];
 switch (option) {
   //by userID
   case "-u":
-  case "--userId": 
-  case "--userid": 
-  case "--user": 
+  case "--userId":
+  case "--userid":
+  case "--user":
   case "--id": {
     try {
       const userId = parseInt(by);
@@ -65,10 +65,11 @@ switch (option) {
           data.fullName,
           data.admin
         );
-        printUserQuery(
-          updated,
-          normalizeTextCRUD(String(userId), "UPDATED-BY-ID")
-        );
+        if (updated)
+          printUserQuery(
+            updated,
+            normalizeTextCRUD(String(userId), "UPDATED-BY-ID")
+          );
       }
     } catch (e) {
       errorHandler(e, "userID");
@@ -96,10 +97,11 @@ switch (option) {
           data.fullName,
           data.admin
         );
-        printUserQuery(
-          updated,
-          normalizeTextCRUD(String(email), "UPDATED-BY-EMAIL")
-        );
+        if (updated)
+          printUserQuery(
+            updated,
+            normalizeTextCRUD(String(email), "UPDATED-BY-EMAIL")
+          );
       }
     } catch (e) {
       errorHandler(e, "email");
@@ -124,10 +126,11 @@ switch (option) {
           data.fullName,
           data.admin
         );
-        printUserQuery(
-          updated,
-          normalizeTextCRUD(String(nick), "UPDATED-BY-NICK")
-        );
+        if (updated)
+          printUserQuery(
+            updated,
+            normalizeTextCRUD(String(nick), "UPDATED-BY-NICK")
+          );
       }
     } catch (e) {
       errorHandler(e, "nick");
