@@ -1,5 +1,5 @@
 import { findAllVideos } from "../../src/videos";
-import { forceExit } from "../users/utils";
+import { forceExit } from "../utils/utils";
 
 const usageText = `Usage: bun scripts/user/all [options]
 

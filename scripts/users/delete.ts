@@ -10,7 +10,7 @@ import {
   normalizeTextCRUD,
   printUserQuery,
   validateEmail,
-} from "./utils";
+} from "../utils/utils";
 
 const errorData = `
 User delete failed.`;

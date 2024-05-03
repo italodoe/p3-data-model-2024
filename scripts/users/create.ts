@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { newUser } from "../../src/users";
-import { forceExit, getRandomBetween, isUserInfo, printUser, validateEmail } from "./utils";
+import { forceExit, getRandomBetween, isUserInfo, printUser, validateEmail } from "../utils/utils";
 
 
 

@@ -1,6 +1,6 @@
 import type { Prisma } from "@prisma/client";
 import { findUserByEmail, findUserById, findUserByNick } from "../../src/users";
-import { forceExit, printUserNotFound, printUserQuery } from "./utils";
+import { forceExit, printUserNotFound, printUserQuery } from "../utils/utils";
 
 const usageText = `Usage: bun scripts/user/find [options]
 
