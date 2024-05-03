@@ -14,6 +14,17 @@ export const validateEmail = (email: string) => {
   return re.test(email);
 };
 
+export function errorHandler(e: Error, type: string) {
+  if (e instanceof Prisma.PrismaClientKnownRequestError) {
+    // The .code property can be accessed in a type-safe manner
+    if (e.code === "P2025") {
+      console.log(`Bad ${type} >>`, e.meta);
+      forceExit(1);
+    }
+  }
+}
+
+
 // user
 export function printUser(
   user: Prisma.UserCreateInput | null,
