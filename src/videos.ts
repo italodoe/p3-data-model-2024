@@ -130,3 +130,29 @@ export const newVideo = async (
     },
   });
 };
+
+/*
+  Delete
+*/
+
+export const deleteVideoById = async (videoId: number) => {
+  return await db.video.delete({
+    where: { videoId },
+  });
+};
+
+export const deleteVideoByUrl = async (url: string) => {
+  return await db.video.delete({
+    where: { url },
+  });
+};
+
+export const deleteVideoByAuthor = async (authorId: number) => {
+  return await db.video.deleteMany({
+    where: {
+      author: {
+        userId: authorId,
+      },
+    },
+  });
+};
