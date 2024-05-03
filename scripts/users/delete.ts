@@ -39,7 +39,6 @@ if (process.argv.length !== 4) {
 
 const option = process.argv[2];
 const by = process.argv[3];
-const q = process.argv[4];
 
 switch (option) {
   //by userId
