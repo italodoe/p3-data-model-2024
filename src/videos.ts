@@ -109,3 +109,24 @@ export const findVideoByDescription = async (description: string) => {
     },
   });
 };
+
+/*
+  Create
+*/
+
+export const newVideo = async (
+  authorId: number,
+  url: string,
+  title: string,
+  description: string | null,
+  comments = null
+) => {
+  return await db.video.create({
+    data: {
+      authorId,
+      url,
+      title,
+      description,
+    },
+  });
+};
