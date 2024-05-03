@@ -11,7 +11,7 @@ export type UserOutputWithoutEmail = Omit<UserOutput, "emails">;
 export const newUser = async (
   email: string,
   nick: string,
-  fullName: string,
+  fullName: string|null,
   admin: boolean = false,
   videos = null,
   comments = null
