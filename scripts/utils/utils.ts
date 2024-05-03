@@ -14,7 +14,11 @@ export const validateEmail = (email: string) => {
   return re.test(email);
 };
 
-export function printUser(user: Prisma.UserCreateInput|null, exit: boolean = true) {
+// user
+export function printUser(
+  user: Prisma.UserCreateInput | null,
+  exit: boolean = true
+) {
   console.log(`User >>   `, user, `\n`);
   if (exit) process.exit(0);
 }
@@ -33,7 +37,7 @@ export function printUserNotFound(exit: boolean = true) {
   if (exit) process.exit(0);
 }
 
-//interfaces
+// interfaces
 export interface userInfo {
   email: string;
   nick: string;
@@ -51,6 +55,21 @@ export function isUserInfo(arg: any): arg is userInfo {
   );
 }
 
-export const normalizeTextCRUD = (identity: string, operation: string ) =>{
-    return `\n${identity}:${operation}`;
+export const normalizeTextCRUD = (identity: string, operation: string) => {
+  return `\n${identity}:${operation}`;
 };
+
+// video
+export function printVideoQuery(
+  video: Prisma.VideoCreateInput,
+  text: string,
+  exit: boolean = true
+) {
+  console.log(`Video >> ${text}  >>  `, video, `\n`);
+  if (exit) process.exit(0);
+}
+
+export function printVideoNotFound(exit: boolean = true) {
+  console.info(`\Video not found\n`);
+  if (exit) process.exit(0);
+}
