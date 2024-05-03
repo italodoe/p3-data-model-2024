@@ -39,9 +39,9 @@ export function printUserNotFound(exit: boolean = true) {
 
 // interfaces
 export interface userInfo {
-  email: string;
-  nick: string;
-  fullName: string;
+  email: string; // Unique
+  nick: string; // Unique
+  fullName?: string | null;
   admin: boolean;
 }
 
@@ -50,7 +50,7 @@ export function isUserInfo(arg: any): arg is userInfo {
     typeof arg.email === "string" &&
     validateEmail(arg.email) &&
     typeof arg.nick === "string" &&
-    typeof arg.fullName === "string" &&
+    (typeof arg.fullName === "string" || arg.fullName == null) &&
     typeof arg.admin === "boolean"
   );
 }
@@ -72,4 +72,20 @@ export function printVideoQuery(
 export function printVideoNotFound(exit: boolean = true) {
   console.info(`\Video not found\n`);
   if (exit) process.exit(0);
+}
+
+interface videoInfo {
+  title: string;
+  url: string;
+  description?: string | null;
+  authorId: number;
+}
+
+export function isVideoInfo(arg: any): arg is videoInfo {
+  return (
+    typeof arg.title === "string" &&
+    typeof arg.url === "string" &&
+    (typeof arg.description === "string" || arg.description == null) &&
+    typeof arg.authorId === "number"
+  );
 }
