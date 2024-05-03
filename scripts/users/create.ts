@@ -77,7 +77,7 @@ switch (option) {
         const user = await newUser(
           data.email,
           data.nick,
-          data.fullName,
+          data.fullName??null,
           data.admin
         );
         printUserQuery(
