@@ -1,4 +1,3 @@
-import type { Prisma } from "@prisma/client";
 import { findUserByEmail, findUserById, findUserByNick } from "../../src/users";
 import {
   forceExit,
