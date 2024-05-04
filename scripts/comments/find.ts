@@ -50,7 +50,7 @@ switch (option) {
       forceExit(1, usageText);
     }
     try {
-      const byId = await findCommentById(id);
+      const byId: any = await findCommentById(id);
       if (byId) {
         printCommentQuery(
           byId,
