@@ -5,6 +5,7 @@ import {
   deleteUserByNick,
 } from "../../src/users";
 import {
+  errorHandler,
   forceExit,
   isUserInfo,
   normalizeTextCRUD,
@@ -119,15 +120,5 @@ switch (option) {
   default: {
     forceExit(1, usageText);
     break;
-  }
-}
-
-function errorHandler(e: Error, type: string) {
-  if (e instanceof Prisma.PrismaClientKnownRequestError) {
-    // The .code property can be accessed in a type-safe manner
-    if (e.code === "P2025") {
-      console.log(`Bad ${type} >>`, e.meta);
-      forceExit(1);
-    }
   }
 }
