@@ -5,6 +5,7 @@ import {
   updateUserByNick,
 } from "../../src/users";
 import {
+  errorHandler,
   forceExit,
   isUserInfo,
   normalizeTextCRUD,
@@ -62,7 +63,7 @@ switch (option) {
           userId,
           data.email,
           data.nick,
-          data.fullName,
+          data.fullName ?? null,
           data.admin
         );
         if (updated)
@@ -94,7 +95,7 @@ switch (option) {
           email,
           data.email,
           data.nick,
-          data.fullName,
+          data.fullName ?? null,
           data.admin
         );
         if (updated)
@@ -123,7 +124,7 @@ switch (option) {
           nick,
           data.nick,
           data.email,
-          data.fullName,
+          data.fullName ?? null,
           data.admin
         );
         if (updated)
@@ -149,15 +150,5 @@ switch (option) {
   default: {
     forceExit(1, usageText);
     break;
-  }
-}
-
-function errorHandler(e: Error, type: string) {
-  if (e instanceof Prisma.PrismaClientKnownRequestError) {
-    // The .code property can be accessed in a type-safe manner
-    if (e.code === "P2025") {
-      console.log(`Bad ${type} >>`, e.meta);
-      forceExit(1);
-    }
   }
 }
