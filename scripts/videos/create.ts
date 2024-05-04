@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import {
+  errorHandler,
   forceExit,
   isVideoInfo,
   normalizeTextCRUD,
@@ -27,19 +28,22 @@ if (process.argv.length != 5) {
 }
 
 const option = process.argv[2];
-const userId = process.argv[3];
+const by = process.argv[3];
 const q = process.argv[4];
 
 switch (option) {
   case "-j":
   case "--json": {
     if (typeof q === "undefined") forceExit(1);
-
+    const userId = parseInt(by);
+    if (isNaN(userId)) {
+      forceExit(1, usageText);
+    }
     try {
       let data = JSON.parse(q);
-      if (isVideoInfo(data)) {
+      if (isVideoInfo(data, true) && userId === data.authorId) {
         const video = await newVideo(
-          data.authorId,
+          userId,
           data.url,
           data.title,
           data.description ?? null
