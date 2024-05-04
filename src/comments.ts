@@ -1,8 +1,10 @@
+import type { Prisma } from "@prisma/client";
+import { db } from "./db";
+export type CommentOutput = Prisma.CommentCreateInput;
+
 /*
   Find
 */
-
-import { db } from "./db";
 
 export const findAllComments = async () => {
   return await db.comment.findMany({
@@ -21,6 +23,8 @@ export const findAllCommentsByAuthorId = async (authorId: number) => {
     include: {
       children: true,
       parent: true,
+      video: true,
+      author: true,
     },
   });
 };
@@ -35,6 +39,8 @@ export const findAllCommentsByAuthorNick = async (nick: string) => {
     include: {
       children: true,
       parent: true,
+      video: true,
+      author: true,
     },
   });
 };
@@ -49,6 +55,8 @@ export const findAllCommentsByAuthorEmail = async (email: string) => {
     include: {
       children: true,
       parent: true,
+      video: true,
+      author: true,
     },
   });
 };
@@ -61,18 +69,24 @@ export const findAllCommentsByVideoId = async (videoId: number) => {
     include: {
       children: true,
       parent: true,
+      video: true,
+      author: true,
     },
   });
 };
 
-export const findAllCommentsByVideoUrl = async (videoId: number) => {
+export const findAllCommentsByVideoUrl = async (url: string) => {
   return await db.comment.findMany({
     where: {
-      videoId,
+      video: {
+        url,
+      },
     },
     include: {
       children: true,
       parent: true,
+      video: true,
+      author: true,
     },
   });
 };
@@ -89,6 +103,22 @@ export const findAllCommentsByVideoAuthor = async (
     include: {
       children: true,
       parent: true,
+      video: true,
+      author: true,
+    },
+  });
+};
+
+export const findAllCommentsByParent = async (parentId: number) => {
+  return await db.comment.findMany({
+    where: {
+      parentId,
+    },
+    include: {
+      children: true,
+      parent: true,
+      video: true,
+      author: true,
     },
   });
 };
@@ -99,6 +129,9 @@ export const findCommentById = async (commentId: number) => {
     where: { commentId },
     include: {
       children: true,
+      parent: true,
+      video: true,
+      author: true,
     },
   });
 };

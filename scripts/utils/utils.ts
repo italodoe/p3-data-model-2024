@@ -105,3 +105,18 @@ export function isVideoInfo(
     videoID
   );
 }
+
+//comments
+export function printCommentQuery(
+  comment: Prisma.CommentCreateInput,
+  text: string,
+  exit: boolean = true
+) {
+  console.log(`Comment >> ${text}  >>  `, comment, `\n`);
+  if (exit) process.exit(0);
+}
+
+export function printCommentNotFound(exit: boolean = true) {
+  console.info(`\nUser not found\n`);
+  if (exit) process.exit(0);
+}
