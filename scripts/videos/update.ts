@@ -7,7 +7,7 @@ import {
   updateVideoViewsById,
 } from "../../src/videos";
 import {
-    errorHandler,
+  errorHandler,
   forceExit,
   isVideoInfo,
   normalizeTextCRUD,
@@ -80,7 +80,7 @@ switch (option) {
             true
           );
       }
-    } catch (e) {
+    } catch (e: any) {
       errorHandler(e, "videoId");
       console.error(errorData);
     }
@@ -107,7 +107,7 @@ switch (option) {
             normalizeTextCRUD(String(url), "UPDATED-BY-URL")
           );
       }
-    } catch (e) {
+    } catch (e: any) {
       errorHandler(e, "url");
       console.error(errorData);
     }
@@ -133,7 +133,7 @@ switch (option) {
           normalizeTextCRUD(String(videoId), "UPDATED-TITLE-BY-ID"),
           true
         );
-    } catch (e) {
+    } catch (e: any) {
       errorHandler(e, "videoId");
       console.error(errorData);
     }
@@ -159,7 +159,7 @@ switch (option) {
           normalizeTextCRUD(String(videoId), "UPDATED-DESCRIPTION-BY-ID"),
           true
         );
-    } catch (e) {
+    } catch (e: any) {
       errorHandler(e, "videoId");
       console.error(errorData);
     }
@@ -183,7 +183,7 @@ switch (option) {
           normalizeTextCRUD(String(videoId), "UPDATED-VIEWS-BY-ID"),
           true
         );
-    } catch (e) {
+    } catch (e: any) {
       errorHandler(e, "videoId");
       console.error(errorData);
     }

@@ -60,7 +60,7 @@ switch (option) {
           normalizeTextCRUD(String(userId), "DELETED-BY-ID"),
           true
         );
-    } catch (e) {
+    } catch (e: any) {
       errorHandler(e, "userID");
       console.error(errorData);
     }
@@ -83,7 +83,7 @@ switch (option) {
           deleted,
           normalizeTextCRUD(String(email), "DELETED-BY-EMAIL")
         );
-    } catch (e) {
+    } catch (e: any) {
       errorHandler(e, "email");
       console.error(errorData);
     }
@@ -103,7 +103,7 @@ switch (option) {
           deleted,
           normalizeTextCRUD(String(nick), "DELETED-BY-NICK")
         );
-    } catch (e) {
+    } catch (e: any) {
       errorHandler(e, "nick");
       console.error(errorData);
     }

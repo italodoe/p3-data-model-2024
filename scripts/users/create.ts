@@ -78,7 +78,7 @@ switch (option) {
         const user = await newUser(
           data.email,
           data.nick,
-          data.fullName??null,
+          data.fullName ?? null,
           data.admin
         );
         printUserQuery(
@@ -87,8 +87,8 @@ switch (option) {
           false
         );
       }
-    } catch (e) {
-      errorHandler(e, "Json")
+    } catch (e: any) {
+      errorHandler(e, "Json");
       console.error(errorData);
     }
     forceExit(0);

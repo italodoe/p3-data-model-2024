@@ -114,7 +114,7 @@ switch (option) {
   case "--URL": {
     try {
       const url = String(by);
-      const byUrl = await findVideoByUrl(url);
+      const byUrl: any = await findVideoByUrl(url);
       if (byUrl) {
         printVideoQuery(
           byUrl,
@@ -141,7 +141,7 @@ switch (option) {
       forceExit(1, usageText);
     }
     try {
-      const byId = await findVideoById(id);
+      const byId: any = await findVideoById(id);
       if (byId) {
         printVideoQuery(
           byId,
@@ -212,7 +212,7 @@ switch (option) {
   }
 }
 
-function printVideoArray(videos: VideoOutput[], text: string) {
+function printVideoArray(videos: any[], text: string) {
   videos.forEach((value: VideoOutput, key) => {
     printVideoQuery(value, text, false);
   });

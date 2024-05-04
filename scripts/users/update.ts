@@ -72,7 +72,7 @@ switch (option) {
             normalizeTextCRUD(String(userId), "UPDATED-BY-ID")
           );
       }
-    } catch (e) {
+    } catch (e: any) {
       errorHandler(e, "userID");
       console.error(errorData);
     }
@@ -104,7 +104,7 @@ switch (option) {
             normalizeTextCRUD(String(email), "UPDATED-BY-EMAIL")
           );
       }
-    } catch (e) {
+    } catch (e: any) {
       errorHandler(e, "email");
       console.error(errorData);
     }
@@ -133,7 +133,7 @@ switch (option) {
             normalizeTextCRUD(String(nick), "UPDATED-BY-NICK")
           );
       }
-    } catch (e) {
+    } catch (e: any) {
       errorHandler(e, "nick");
       console.error(errorData);
     }

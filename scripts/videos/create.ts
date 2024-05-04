@@ -54,7 +54,7 @@ switch (option) {
           false
         );
       }
-    } catch (e) {
+    } catch (e: any) {
       errorHandler(e, "Json");
       console.error(errorData);
     }

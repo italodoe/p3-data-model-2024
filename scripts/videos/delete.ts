@@ -59,7 +59,7 @@ switch (option) {
           normalizeTextCRUD(String(videoId), "DELETED-BY-ID"),
           true
         );
-    } catch (e) {
+    } catch (e: any) {
       errorHandler(e, "videoID");
       console.error(errorData);
     }
@@ -79,7 +79,7 @@ switch (option) {
           deleted,
           normalizeTextCRUD(String(url), "DELETED-BY-URL")
         );
-    } catch (e) {
+    } catch (e: any) {
       errorHandler(e, "url");
       console.error(errorData);
     }
@@ -105,7 +105,7 @@ switch (option) {
         deleted
       );
       forceExit(0);
-    } catch (e) {
+    } catch (e: any) {
       errorHandler(e, "videoID");
       console.error(errorData);
     }
