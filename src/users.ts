@@ -99,7 +99,7 @@ export const updateUserById = async (
   userId: number,
   email: string,
   nick: string,
-  fullName: string,
+  fullName: string|null,
   admin: boolean = false,
   videos = null,
   comments = null
@@ -119,7 +119,7 @@ export const updateUserByEmail = async (
   email: string,
   newEmail: string,
   nick: string,
-  fullName: string,
+  fullName: string|null,
   admin: boolean = false,
   videos = null,
   comments = null
@@ -139,7 +139,7 @@ export const updateUserByNick = async (
   nick: string,
   newNick: string,
   email: string,
-  fullName: string,
+  fullName: string|null,
   admin: boolean = false,
   videos = null,
   comments = null
