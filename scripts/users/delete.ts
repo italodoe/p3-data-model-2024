@@ -20,7 +20,7 @@ Usage: bun scripts/users/delete.ts [options]
 
 Options:
 
--u, --user <userId>       Delete user by user ID
+-i, --id <userId>       Delete user by user ID
                             Provide the user ID of the user to delete
                             Example: -u 123
 
@@ -44,6 +44,7 @@ const by = process.argv[3];
 switch (option) {
   //by userId
   case "-u":
+  case "-i":
   case "--userId":
   case "--userid":
   case "--user":

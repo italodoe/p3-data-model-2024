@@ -18,7 +18,7 @@ Usage: bun scripts/videos/delete.ts [options]
 
 Options:
 
--v, --video <videoId>       Delete video by video ID
+-i, --id <videoId>          Delete video by video ID
                             Provide the video ID of the video to delete
                             Example: -v 123
 
@@ -26,7 +26,7 @@ Options:
                             Provide the url of the video to delete
                             Example: -u 'aNapFsNDbZE'
 
--a, --author <userId>       Delete user by video AUTHOR
+-a, --author <authorId>     Delete user by video AUTHOR
                             Provide the authorID of the video to delete all
                             Example: -a 66
 
