@@ -9,6 +9,8 @@ export const findAllComments = async () => {
     include: {
       children: true,
       parent: true,
+      video: true,
+      author: true,
     },
   });
 };
