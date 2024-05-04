@@ -1,6 +1,7 @@
 import type { Prisma } from "@prisma/client";
 import { db } from "./db";
 export type VideoOutput = Prisma.VideoCreateInput;
+
 /*
   Find
 */
@@ -154,5 +155,70 @@ export const deleteVideoByAuthor = async (authorId: number) => {
         userId: authorId,
       },
     },
+  });
+};
+
+/*
+  Update
+*/
+
+export const updateVideoById = async (
+  videoId: number,
+  url: string,
+  title: string,
+  description: string | null,
+  comments = null
+) => {
+  return await db.video.update({
+    where: { videoId },
+    data: {
+      url,
+      title,
+      description,
+    },
+  });
+};
+
+export const updateVideoByUrl = async (
+  url: string,
+  title: string,
+  description: string | null,
+  comments = null
+) => {
+  return await db.video.update({
+    where: { url },
+    data: {
+      url,
+      title,
+      description,
+    },
+  });
+};
+
+export const updateVideoTitleById = async (videoId: number, title: string) => {
+  return await db.video.update({
+    where: { videoId },
+    data: {
+      title,
+    },
+  });
+};
+
+export const updateVideoDescriptionById = async (
+  videoId: number,
+  description: string | null
+) => {
+  return await db.video.update({
+    where: { videoId },
+    data: {
+      description,
+    },
+  });
+};
+
+export const updateVideoViewsById = async (videoId: number) => {
+  return await db.video.update({
+    where: { videoId },
+    data: { views: { increment: 1 } },
   });
 };
