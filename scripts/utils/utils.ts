@@ -1,4 +1,4 @@
-import type { Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 export function forceExit(code: number, usageText: string | null = null) {
   if (usageText) console.error(usageText);
@@ -17,13 +17,12 @@ export const validateEmail = (email: string) => {
 export function errorHandler(e: Error, type: string) {
   if (e instanceof Prisma.PrismaClientKnownRequestError) {
     // The .code property can be accessed in a type-safe manner
-    if (e.code === "P2025") {
+    if (e.code === "P2025" || e.code === "2002") {
       console.log(`Bad ${type} >>`, e.meta);
       forceExit(1);
     }
   }
 }
-
 
 // user
 export function printUser(
@@ -86,17 +85,23 @@ export function printVideoNotFound(exit: boolean = true) {
 }
 
 interface videoInfo {
+  videoId?: number;
   title: string;
   url: string;
   description?: string | null;
   authorId: number;
 }
 
-export function isVideoInfo(arg: any): arg is videoInfo {
+export function isVideoInfo(
+  arg: any,
+  withId: boolean = false
+): arg is videoInfo {
+  const videoID = withId ? typeof arg.videoId === "number" : true;
   return (
     typeof arg.title === "string" &&
     typeof arg.url === "string" &&
     (typeof arg.description === "string" || arg.description == null) &&
-    typeof arg.authorId === "number"
+    typeof arg.authorId === "number" &&
+    videoID
   );
 }
