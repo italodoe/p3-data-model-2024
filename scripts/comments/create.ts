@@ -36,11 +36,11 @@ switch (option) {
         console.log(data);
 
         if (isCommentInfo(data)) {
-          const comment = await newComment(
+          const comment: any = await newComment(
             data.authorId,
             data.videoId,
             data.text,
-            data.parentId,
+            data.parentId??null,
           );
           printCommentQuery(
             comment,
