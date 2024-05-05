@@ -1,4 +1,3 @@
-import { Prisma } from "@prisma/client";
 import {
   errorHandler,
   forceExit,
@@ -15,6 +14,10 @@ const errorData = `
 Video delete failed.`;
 const usageText = `
 Usage: bun scripts/videos/delete.ts [options]
+
+Or
+
+Usage: bun tsx scripts/videos/delete.ts [options]
 
 Options:
 

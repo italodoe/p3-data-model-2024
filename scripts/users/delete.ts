@@ -1,4 +1,3 @@
-import { Prisma } from "@prisma/client";
 import {
   deleteUserByEmail,
   deleteUserById,
@@ -18,9 +17,13 @@ User delete failed.`;
 const usageText = `
 Usage: bun scripts/users/delete.ts [options]
 
+Or
+
+Usage: bun tsx scripts/users/delete.ts [options]
+
 Options:
 
--i, --id <userId>       Delete user by user ID
+-i, --id <userId>           Delete user by user ID
                             Provide the user ID of the user to delete
                             Example: -u 123
 
