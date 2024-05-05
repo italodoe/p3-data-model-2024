@@ -10,14 +10,20 @@ import {
 const errorData = `
 Comment update failed. Please provide valid details.`;
 const usageText = `
-Usage: commnet update [options]
+Usage: bun scripts/comments/update.ts [options]
+
+or
+
+bunx tsx scripts/comments/update.ts [options]
+
 
 Options:
 
--i, --id <json_details>                    Update comment details by comment ID
+-j, --json '<json_details>'                  '{ "text": "<string>", "commentId": <number>, "parentId": <number>|null }'
+                                             Update comment details by comment ID
                                              Provide the comment ID into Json string to edit and new details in JSON format.
-                                             Example: -b 123 '{ "text": "This song pumped me up so hard I cleaned my whole room.", 
-                                             "videoId": 73, "authorId": 37, "parentId": 37 }'
+                                             Example: -j '{ "text": "This song pumped me up so hard I cleaned my whole room.", 
+                                             "commentId": 52, "parentId": 37 }'
 
 -h, --help                                   Display this help message`;
 
@@ -29,6 +35,8 @@ const option = process.argv[2];
 const q = process.argv[3];
 
 switch (option) {
+  case "-j":
+  case "--json":
   case "-i":
   case "--id":
   case "--commentid":

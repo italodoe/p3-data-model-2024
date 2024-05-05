@@ -19,17 +19,24 @@ Video update failed. Please provide valid details.`;
 const usageText = `
 Usage: bun scripts/videos/update.ts [options]
 
+or
+
+bunx tsx scripts/videos/update.ts [options]
+
+
 Options:
 
--i, --id <videoId> <json_details>           Update video details by video ID
+-i, --id <videoId> '<json_details>'        '{ "title": "<string>", "url": "<string>", "description": "<string>", 
+                                           "authorId": <number>}'
+                                            Update video details by video ID
                                             Provide the video ID of the video to edit and new details in JSON format
-                                            The provided video ID must match the JSON videoId exactly.
                                             Example: -i 123 '{ "title": "where is my mind?", "url": "aNapFsNDbZE", 
-                                            "description": "Nice, deal", "authorId": 39, "videoId": 123  }'
+                                            "description": "Nice, deal", "authorId": 39 }'
 
--url, --url <url> <json_details>            Update video details by video URL
+-url, --url <url> <json_details>            '{ "title": "<string>", "url": "<string>", "description": "<string>", 
+                                            "authorId": <number>}'
+                                            Update video details by video URL
                                             Provide the url of the video to edit and new details in JSON format
-                                            The provided URL must match the JSON URL exactly.
                                             Example: -u aNapFsNDbZE '{ "title": "where is my mind?", "url": "aNapFsNDbZE", 
                                             "description": "Nice, deal", "authorId": 39 }'
 
@@ -66,7 +73,7 @@ switch (option) {
         forceExit(1, usageText);
       }
       let data = JSON.parse(q);
-      if (isVideoInfo(data, true)) {
+      if (isVideoInfo(data)) {
         const updated = await updateVideoById(
           videoId,
           data.url,

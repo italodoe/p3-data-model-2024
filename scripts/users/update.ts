@@ -24,17 +24,20 @@ bunx tsx scripts/users/update.ts [options]
 
 Options:
 
--i, --id <userId> <json_details>            Update user details by user ID
+-i, --id <userId> '<json_details>'          '{"email": "<string>", "nick": "<string>", "fullName": "<string>", "admin": <true|false>}'
+                                            Update user details by user ID
                                             Provide the user ID of the user to edit and new details in JSON format
                                             Example: -u 123 '{"email": "new@example.com", "nick": "new_nick", 
                                             "fullName": "New Full Name", "admin": true}'
 
--e, --email <email> <json_details>          Update user details by user EMAIL
+-e, --email <email> '<json_details>'        '{"email": "<string>", "nick": "<string>", "fullName": "<string>", "admin": <true|false>}'
+                                            Update user details by user EMAIL
                                             Provide the email of the user to edit and new details in JSON format
                                             Example: -e 'user@example.com' '{"email": "new@example.com", 
                                             "nick": "new_nick", "fullName": "New Full Name", "admin": true}'
 
--n, --nick <nickname> <json_details>        Update user details by user NICK
+-n, --nick <nickname> '<json_details>'      '{"email": "<string>", "nick": "<string>", "fullName": "<string>", "admin": <true|false>}'
+                                            Update user details by user NICK
                                             Provide the email of the user to edit and new details in JSON format
                                             Example: -n 'user_nick' '{"email": "new@example.com", "nick": "new_nick", 
                                             "fullName": "New Full Name", "admin": true}'
