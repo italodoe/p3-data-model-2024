@@ -15,7 +15,7 @@ Usage: bun scripts/videos/create.ts [options]
 
 Options:
 
-  -j, --json <useId> '{}'
+  -j, --json '{ "title": "<string>", "url": "<string>", "description": "<string>"|<null>, "authorId": <number>}'
                             Create a user with JSON data.
                             Enclose the JSON object with curly braces {}
                             Enclose the entire JSON string with single quotes '
@@ -23,27 +23,22 @@ Options:
 
   -h, --help                Display this help message`;
 
-if (process.argv.length != 5) {
+if (process.argv.length != 4) {
   forceExit(1, usageText);
 }
 
 const option = process.argv[2];
-const by = process.argv[3];
-const q = process.argv[4];
+const q = process.argv[3];
 
 switch (option) {
   case "-j":
   case "--json": {
     if (typeof q === "undefined") forceExit(1);
-    const userId = parseInt(by);
-    if (isNaN(userId)) {
-      forceExit(1, usageText);
-    }
     try {
       let data = JSON.parse(q);
-      if (isVideoInfo(data, true) && userId === data.authorId) {
+      if (isVideoInfo(data)) {
         const video = await newVideo(
-          userId,
+          data.authorId,
           data.url,
           data.title,
           data.description ?? null
