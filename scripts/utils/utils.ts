@@ -17,7 +17,7 @@ export const validateEmail = (email: string) => {
 export function errorHandler(e: Error, type: string) {
   if (e instanceof Prisma.PrismaClientKnownRequestError) {
     // The .code property can be accessed in a type-safe manner
-    if (e.code === "P2025" || e.code === "2002"  || e.code === "P2002") {
+    if (e.code === "P2025" || e.code === "2002" || e.code === "P2002") {
       console.log(`Bad ${type} >>`, e.meta);
       forceExit(1);
     }
@@ -138,8 +138,8 @@ export function isCommentInfo(
     const commentId = withId ? typeof arg.commentId === "number" : true;
     return (
       typeof arg.text === "string" &&
-      typeof arg.authorId === "number" &&
-      typeof arg.videoId === "number" &&
+      // typeof arg.authorId === "number" &&
+      // typeof arg.videoId === "number" &&
       (typeof arg.parentId === "number" || arg.parentId === null) &&
       commentId
     );
