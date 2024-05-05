@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, type User } from "@prisma/client";
 
 export function forceExit(code: number, usageText: string | null = null) {
   if (usageText) console.error(usageText);
@@ -17,7 +17,7 @@ export const validateEmail = (email: string) => {
 export function errorHandler(e: Error, type: string) {
   if (e instanceof Prisma.PrismaClientKnownRequestError) {
     // The .code property can be accessed in a type-safe manner
-    if (e.code === "P2025" || e.code === "2002") {
+    if (e.code === "P2025" || e.code === "2002"  || e.code === "P2002") {
       console.log(`Bad ${type} >>`, e.meta);
       forceExit(1);
     }
@@ -119,4 +119,36 @@ export function printCommentQuery(
 export function printCommentNotFound(exit: boolean = true) {
   console.info(`\nUser not found\n`);
   if (exit) process.exit(0);
+}
+
+// interfaces
+interface commentInfo {
+  commentId: number;
+  text: string;
+  createdAt: Date;
+  videoId: number;
+  authorId?: number;
+  parentId?: number;
+}
+export function isCommentInfo(
+  arg: any,
+  withId: boolean = false
+): arg is commentInfo {
+  {
+    const commentId = withId ? typeof arg.commentId === "number" : true;
+
+    console.log(typeof arg.text === "string");
+    console.log(typeof arg.authorId === "number");
+    console.log(typeof arg.videoId === "number");
+    console.log(typeof arg.parentId === "number" || arg.parentId === null);
+    console.log(commentId);
+
+    return (
+      typeof arg.text === "string" &&
+      typeof arg.authorId === "number" &&
+      typeof arg.videoId === "number" &&
+      (typeof arg.parentId === "number" || arg.parentId === null) &&
+      commentId
+    );
+  }
 }
