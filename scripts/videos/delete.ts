@@ -93,6 +93,7 @@ switch (option) {
 
   //by authorId
   case "-a":
+  case "--author":
   case "--authorId":
   case "--authorid": {
     try {
