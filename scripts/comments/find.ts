@@ -21,7 +21,7 @@ const usageText = `Usage: bun scripts/comments/find.ts [options]
 
 Or
 
-Usage: bun tsx scripts/comments/find [options]
+Usage: bun tsx scripts/comments/find.ts [options]
 
 Options:
   -i, --id <commentId>             Find a comment by its ID
