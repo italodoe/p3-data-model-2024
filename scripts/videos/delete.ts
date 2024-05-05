@@ -49,7 +49,7 @@ switch (option) {
   case "--videoid":
   case "--video":
   case "-i":
-  case "-id": {
+  case "--id": {
     try {
       const videoId = parseInt(by);
       if (isNaN(videoId)) {
