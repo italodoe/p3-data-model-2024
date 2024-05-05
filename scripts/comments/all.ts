@@ -1,11 +1,11 @@
 import { findAllComments } from "../../src/comments";
 import { forceExit } from "../utils/utils";
 
-const usageText = `Usage: bun scripts/comments/all [options]
+const usageText = `Usage: bun scripts/comments/all.ts [options]
 
 or
 
-bunx tsx scripts/comments/all [options]
+bunx tsx scripts/comments/all.ts [options]
 
 Description:
   This script retrieves all comments along with their videos, authors, and comments.

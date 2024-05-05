@@ -1,11 +1,11 @@
 import { findAllUsers } from "../../src/users";
 import { forceExit } from "../utils/utils";
 
-const usageText = `Usage: bun scripts/users/all [options]
+const usageText = `Usage: bun scripts/users/all.ts [options]
 
 or
 
-bunx tsx scripts/users/all [options]
+bunx tsx scripts/users/all.ts [options]
 
 Description:
   This script retrieves all users along with their videos and comments.

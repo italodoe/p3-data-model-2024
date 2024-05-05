@@ -1,11 +1,11 @@
 import { findAllVideos } from "../../src/videos";
 import { forceExit } from "../utils/utils";
 
-const usageText = `Usage: bun scripts/videos/all [options]
+const usageText = `Usage: bun scripts/videos/all.ts [options]
 
 or
 
-bunx tsx scripts/videos/all [options]
+bunx tsx scripts/videos/all.ts [options]
 
 Description:
   This script retrieves all videos along with their authors and comments.
