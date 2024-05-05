@@ -9,8 +9,12 @@ import {
 
 const usageText = `Usage: bun scripts/users/find [options]
 
+Or
+
+Usage: bun tsx scripts/users/find.ts [options]
+
 Options:
-  -u, --user <userId>           Search for a user by userId
+  -i, --id <userId>             Search for a user by userId
   -e, --email <email>           Search for a user by email
   -n, --nick <nickname>         Search for a user by nickname
   -h, --help                    Display this help message`;
@@ -23,6 +27,7 @@ const option = process.argv[2];
 const by = process.argv[3];
 
 switch (option) {
+  case "-i":
   case "-u":
   case "--userId":
   case "--userid":

@@ -18,11 +18,15 @@ import {
 
 const usageText = `Usage: bun scripts/videos/find [options]
 
+Or
+
+Usage: bun tsx scripts/videos/find.ts [options]
+
 Options:
+  -i, --id <videoId>       Search for a video by videoId
   -a, --author <authorId>       Search for a video by authorId
   -e, --email <email>           Search for a video by author email
   -n, --nick <nickname>         Search for a video by author nickname
-  -v, --videoId <videoId>       Search for a video by videoId
   -u, --url <url>               Search for a video by url
   -t, --title <term>            Search for a video by title
   -d, --description <term>      Search for a video by description
@@ -36,6 +40,33 @@ const option = process.argv[2];
 const by = process.argv[3];
 
 switch (option) {
+  case "-v":
+  case "--video":
+  case "--videoId":
+  case "--videoid":
+  case "--id":
+  case "-i": {
+    const id = parseInt(by);
+    if (isNaN(id)) {
+      forceExit(1, usageText);
+    }
+    try {
+      const byId: any = await findVideoById(id);
+      if (byId) {
+        printVideoQuery(
+          byId,
+          normalizeTextCRUD(String(id), "FIND-BY-VIDEO-ID"),
+          true
+        );
+      }
+      printVideoNotFound();
+    } catch (error) {
+      console.error(error);
+    }
+
+    break;
+  }
+
   case "-a":
   case "--author":
   case "--authorId":
@@ -76,8 +107,6 @@ switch (option) {
           arrayByEmail,
           normalizeTextCRUD(email, "FIND-BY-AUTHOR-EMAIL")
         );
-        console.log(arrayByEmail);
-
         forceExit(0);
       }
       printVideoNotFound();
@@ -119,33 +148,6 @@ switch (option) {
         printVideoQuery(
           byUrl,
           normalizeTextCRUD(url, "FIND-BY-VIDEO-URL"),
-          true
-        );
-      }
-      printVideoNotFound();
-    } catch (error) {
-      console.error(error);
-    }
-
-    break;
-  }
-
-  case "-v":
-  case "--video":
-  case "--videoId":
-  case "--videoid":
-  case "--id":
-  case "-i": {
-    const id = parseInt(by);
-    if (isNaN(id)) {
-      forceExit(1, usageText);
-    }
-    try {
-      const byId: any = await findVideoById(id);
-      if (byId) {
-        printVideoQuery(
-          byId,
-          normalizeTextCRUD(String(id), "FIND-BY-VIDEO-ID"),
           true
         );
       }
