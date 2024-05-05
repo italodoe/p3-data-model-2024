@@ -136,13 +136,6 @@ export function isCommentInfo(
 ): arg is commentInfo {
   {
     const commentId = withId ? typeof arg.commentId === "number" : true;
-
-    console.log(typeof arg.text === "string");
-    console.log(typeof arg.authorId === "number");
-    console.log(typeof arg.videoId === "number");
-    console.log(typeof arg.parentId === "number" || arg.parentId === null);
-    console.log(commentId);
-
     return (
       typeof arg.text === "string" &&
       typeof arg.authorId === "number" &&
