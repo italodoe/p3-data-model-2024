@@ -7,7 +7,7 @@ import {
   validateEmail,
 } from "../utils/utils";
 
-const usageText = `Usage: bun scripts/users/find [options]
+const usageText = `Usage: bun scripts/users/find.ts [options]
 
 Or
 

@@ -16,7 +16,7 @@ import {
   type VideoOutput,
 } from "../../src/videos";
 
-const usageText = `Usage: bun scripts/videos/find [options]
+const usageText = `Usage: bun scripts/videos/find.ts [options]
 
 Or
 
