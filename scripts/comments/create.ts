@@ -1,5 +1,11 @@
 import { newComment } from "../../src/comments";
-import { errorHandler, forceExit, isCommentInfo, normalizeTextCRUD, printCommentQuery } from "../utils/utils";
+import {
+  errorHandler,
+  forceExit,
+  isCommentInfo,
+  normalizeTextCRUD,
+  printCommentQuery,
+} from "../utils/utils";
 
 const errorData = `
 Invalid comment creation data. Please provide correct details`;
@@ -27,43 +33,39 @@ const option = process.argv[2];
 const q = process.argv[3];
 
 switch (option) {
-    case "-j":
-    case "--json": {
-      if (typeof q === "undefined") forceExit(1);
-        console.log(q);
-      try {
-        let data = JSON.parse(q);
-        console.log(data);
-
-        if (isCommentInfo(data)) {
-          const comment: any = await newComment(
-            data.authorId,
-            data.videoId,
-            data.text,
-            data.parentId??null,
-          );
-          printCommentQuery(
-            comment,
-            normalizeTextCRUD(JSON.stringify(data), "CREATED-BY-JSON"),
-            false
-          );
-        }
-      } catch (e: any) {
-        errorHandler(e, "Json");
-        console.error(errorData);
+  case "-j":
+  case "--json": {
+    if (typeof q === "undefined") forceExit(1);
+    try {
+      let data = JSON.parse(q);
+      if (isCommentInfo(data)) {
+        const comment: any = await newComment(
+          data.authorId,
+          data.videoId,
+          data.text,
+          data.parentId ?? null
+        );
+        printCommentQuery(
+          comment,
+          normalizeTextCRUD(JSON.stringify(data), "CREATED-BY-JSON"),
+          false
+        );
       }
-      forceExit(0);
-      break;
+    } catch (e: any) {
+      errorHandler(e, "Json");
+      console.error(errorData);
     }
-  
-    case "-h":
-    case "--help": {
-      forceExit(0, usageText);
-      break;
-    }
-    default: {
-      forceExit(1, usageText);
-      break;
-    }
+    forceExit(0);
+    break;
   }
-  
+
+  case "-h":
+  case "--help": {
+    forceExit(0, usageText);
+    break;
+  }
+  default: {
+    forceExit(1, usageText);
+    break;
+  }
+}
