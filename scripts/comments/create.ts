@@ -17,7 +17,8 @@ or
 Usage: bun tsx scripts/comments/create.ts [options]
 
 Options:
-  -j, --json '{ "text": "<string>", "videoId": <number>, "authorId": <number>, "parentId": <number or null> }'
+
+  -j, --json '{ "text": "<string>", "videoId": <number>, "authorId": <number>, "parentId": <number>|<null> }'
                             Create a comment with JSON data.
                             Enclose the JSON object with curly braces {}
                             Enclose the entire JSON string with single quotes '

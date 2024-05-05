@@ -15,8 +15,13 @@ Invalid user creation data. Please provide correct details`;
 const usageText = `
 Usage: bun scripts/users/create.ts [options]
 
+or
+
+Usage: bun tsx scripts/users/create.ts [options]
+
 Options:
-  -r, --random <integer>    Create a user with random data between 1-10
+
+  -r, --random <integer>    Create between 1-10 users with random data
 
   -j, --json '{"email": "<string>", "nick": "<string>", "fullName": "<string>", "admin": <true|false>}'
                             Create a user with JSON data.

@@ -13,6 +13,10 @@ Invalid video creation data. Please provide correct details`;
 const usageText = `
 Usage: bun scripts/videos/create.ts [options]
 
+or
+
+Usage: bun tsx scripts/videos/create.ts [options]
+
 Options:
 
   -j, --json '{ "title": "<string>", "url": "<string>", "description": "<string>"|<null>, "authorId": <number>}'
