@@ -117,7 +117,7 @@ export function printCommentQuery(
 }
 
 export function printCommentNotFound(exit: boolean = true) {
-  console.info(`\nUser not found\n`);
+  console.info(`\Comment not found\n`);
   if (exit) process.exit(0);
 }
 
