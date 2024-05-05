@@ -18,9 +18,13 @@ User update failed. Please provide valid details.`;
 const usageText = `
 Usage: bun scripts/users/update.ts [options]
 
+or
+
+bunx tsx scripts/users/update.ts [options]
+
 Options:
 
--u, --user <userId> <json_details>          Update user details by user ID
+-i, --id <userId> <json_details>            Update user details by user ID
                                             Provide the user ID of the user to edit and new details in JSON format
                                             Example: -u 123 '{"email": "new@example.com", "nick": "new_nick", 
                                             "fullName": "New Full Name", "admin": true}'
@@ -47,6 +51,7 @@ const q = process.argv[4];
 
 switch (option) {
   //by userID
+  case "-i":
   case "-u":
   case "--userId":
   case "--userid":
