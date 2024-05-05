@@ -6,9 +6,9 @@ import {
   validateEmail,
 } from "../utils/utils";
 import {
-  finVideoByAuthorEmail,
-  finVideoByAuthorId,
-  finVideoByAuthorNick,
+  findAllVideosByAuthorEmail,
+  findAllVideosByAuthorId,
+  findAllVideosByAuthorNick,
   findVideoByDescription,
   findVideoById,
   findVideoByTitle,
@@ -47,7 +47,7 @@ switch (option) {
     }
 
     try {
-      const arrayById = await finVideoByAuthorId(id);
+      const arrayById = await findAllVideosByAuthorId(id);
       if (arrayById && arrayById.length) {
         printVideoArray(
           arrayById,
@@ -70,7 +70,7 @@ switch (option) {
       if (!validateEmail(email)) {
         forceExit(1, usageText);
       }
-      const arrayByEmail = await finVideoByAuthorEmail(email);
+      const arrayByEmail = await findAllVideosByAuthorEmail(email);
       if (arrayByEmail && arrayByEmail.length) {
         printVideoArray(
           arrayByEmail,
@@ -93,7 +93,7 @@ switch (option) {
   case "--nickname": {
     try {
       const nick = String(by);
-      const arrayByNick = await finVideoByAuthorNick(nick);
+      const arrayByNick = await findAllVideosByAuthorNick(nick);
       if (arrayByNick && arrayByNick.length) {
         printVideoArray(
           arrayByNick,

@@ -17,7 +17,7 @@ export const findAllVideos = async () => {
 
 //find by author
 
-export const finVideoByAuthorId = async (userId: number) => {
+export const findAllVideosByAuthorId = async (userId: number) => {
   return await db.video.findMany({
     where: { authorId: userId },
     include: {
@@ -27,7 +27,7 @@ export const finVideoByAuthorId = async (userId: number) => {
   });
 };
 
-export const finVideoByAuthorEmail = async (email: string) => {
+export const findAllVideosByAuthorEmail = async (email: string) => {
   return await db.video.findMany({
     where: {
       author: {
@@ -41,7 +41,7 @@ export const finVideoByAuthorEmail = async (email: string) => {
   });
 };
 
-export const finVideoByAuthorNick = async (nick: string) => {
+export const findAllVideosByAuthorNick = async (nick: string) => {
   return await db.video.findMany({
     where: {
       author: {
