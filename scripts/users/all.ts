@@ -3,6 +3,10 @@ import { forceExit } from "../utils/utils";
 
 const usageText = `Usage: bun scripts/users/all [options]
 
+or
+
+bunx tsx scripts/users/all [options]
+
 Description:
   This script retrieves all users along with their videos and comments.
 

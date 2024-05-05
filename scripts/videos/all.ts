@@ -3,6 +3,10 @@ import { forceExit } from "../utils/utils";
 
 const usageText = `Usage: bun scripts/videos/all [options]
 
+or
+
+bunx tsx scripts/videos/all [options]
+
 Description:
   This script retrieves all videos along with their authors and comments.
 
